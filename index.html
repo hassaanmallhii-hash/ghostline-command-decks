@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghostline_command_deck — creativity has no limits !</title>
+    <meta name="description" content="creativity has no limits !">
+    <meta property="og:title" content="Ghostline_command_deck">
+    <meta property="og:description" content="creativity has no limits !">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=23">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="brand-group">
+            <div class="logo">GHOSTLINE_COMMAND_DECK</div>
+            <div class="deck-badge">CREATIVITY HAS NO LIMITS !</div>
+            <!-- Workspace Mode Switcher: 1st Normal Preview Builder vs 2nd Pure Q&A Chat -->
+            <div class="workspace-mode-switcher" id="workspace-mode-switcher" role="tablist">
+                <button type="button" class="mode-switch-btn active" data-mode="preview" id="mode-btn-preview">
+                    <span>⚡</span> 1. Normal Preview
+                </button>
+                <button type="button" class="mode-switch-btn" data-mode="qa" id="mode-btn-qa">
+                    <span>🧠</span> 2. AI Q&amp;A Chat <span class="mix-pill">GPT + Gemini + Claude</span>
+                </button>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button id="btn-export-code" class="outline-btn" type="button" title="View & download your generated code">📋 GENERATED CODE</button>
+            <button id="btn-publish" class="blue-btn" type="button" title="Download generated HTML application">🚀 DOWNLOAD CODE</button>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <aside class="left-sidebar">
+            <div class="sidebar-header">
+                <span class="section-title">SPECIALIZED AGENT UNITS</span>
+                <span class="agent-count-pill">3 UNITS</span>
+            </div>
+
+            <!-- Agent selector cards -->
+            <div class="agent-cards-container">
+                <div class="agent-card active" data-agent="architect">
+                    <div class="agent-card-inner">
+                        <div class="agent-icon icon-architect">⚡</div>
+                        <div class="agent-info">
+                            <h4>The Architect</h4>
+                            <p>SYSTEMS & STRATEGY</p>
+                        </div>
+                        <div class="agent-status"><span class="dot online"></span> ONLINE</div>
+                    </div>
+                    <div class="agent-stats-tag">3D • Physics • Games • Architecture</div>
+                </div>
+
+                <div class="agent-card" data-agent="director">
+                    <div class="agent-card-inner">
+                        <div class="agent-icon icon-director">✦</div>
+                        <div class="agent-info">
+                            <h4>The Art Director</h4>
+                            <p>VISUALS & IDENTITY</p>
+                        </div>
+                        <div class="agent-status"><span class="dot offline"></span> STANDBY</div>
+                    </div>
+                    <div class="agent-stats-tag">PBR • Shaders • Lighting • UI/UX</div>
+                </div>
+
+                <div class="agent-card" data-agent="host">
+                    <div class="agent-card-inner">
+                        <div class="agent-icon icon-host">🎙</div>
+                        <div class="agent-info">
+                            <h4>The Host</h4>
+                            <p>VOICE & PERSONA</p>
+                        </div>
+                        <div class="agent-status"><span class="dot offline"></span> STANDBY</div>
+                    </div>
+                    <div class="agent-stats-tag">Audio VFX • Music • Speech • Haptics</div>
+                </div>
+            </div>
+
+            <!-- Chat Tab Bar / Switcher -->
+            <div class="chat-tab-bar" id="chat-tab-bar">
+                <button class="chat-tab active" data-agent-tab="architect" type="button">
+                    <span class="tab-dot dot-architect"></span> Architect
+                    <span class="tab-badge" id="badge-architect">0</span>
+                </button>
+                <button class="chat-tab" data-agent-tab="director" type="button">
+                    <span class="tab-dot dot-director"></span> Director
+                    <span class="tab-badge" id="badge-director">0</span>
+                </button>
+                <button class="chat-tab" data-agent-tab="host" type="button">
+                    <span class="tab-dot dot-host"></span> Host
+                    <span class="tab-badge" id="badge-host">0</span>
+                </button>
+            </div>
+
+            <!-- Conversation window -->
+            <div id="chat-window" class="chat-history"></div>
+
+            <!-- Enhanced Chat Bar & Controls (Reconstructed dynamically per selected agent) -->
+            <div class="chatbar-wrapper" id="chatbar-wrapper">
+                <div class="chatbar-header">
+                    <div class="chatbar-target" id="chatbar-target">
+                        <span class="target-indicator"></span>
+                        <span class="target-name">Architect Channel</span>
+                    </div>
+                    <div class="chatbar-actions">
+                        <button type="button" id="btn-clear-agent-chat" class="icon-link-btn" title="Clear current agent chat">🗑 Clear</button>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <textarea id="chat-input" rows="1" placeholder="Ask The Architect... (Shift+Enter for new line)" autocomplete="off"></textarea>
+                    <div class="input-buttons">
+                        <button id="send-btn" type="button" class="send-action-btn">
+                            <span class="btn-text">SEND</span>
+                            <span class="btn-icon">➤</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="chatbar-footer">
+                    <div class="footer-left">
+                        <span class="token-estimate" id="token-estimate">Ready</span>
+                    </div>
+                    <span class="shortcut-tip">Enter ↵ to send • Shift+Enter newline</span>
+                </div>
+            </div>
+        </aside>
+
+        <section class="right-preview" id="right-preview-panel">
+            <!-- Preview device & view modes toolbar -->
+            <div class="preview-header-bar" id="preview-header-bar">
+                <div class="preview-title-group">
+                    <span class="live-pill"><span class="pulsing-dot"></span> LIVE DEPLOYMENT</span>
+                    <span id="preview-app-title" class="preview-app-title">No Application Loaded</span>
+                </div>
+                <div class="preview-controls-group">
+                    <div class="device-switcher" role="group" aria-label="Device simulation size">
+                        <button type="button" class="device-btn active" data-device="full" title="Responsive (100%)">🖥 Full</button>
+                        <button type="button" class="device-btn" data-device="desktop" title="Desktop (1280×800)">💻 Desktop</button>
+                        <button type="button" class="device-btn" data-device="tablet" title="Tablet (768×1024)">📱 Tablet</button>
+                        <button type="button" class="device-btn" data-device="mobile" title="Mobile (375×812)">📲 Mobile</button>
+                    </div>
+                    <button id="btn-refresh-preview" class="preview-action-btn" type="button" title="Reload sandbox iframe">🔄 Reload</button>
+                    <button id="btn-inspect-errors" class="preview-action-btn" type="button" title="Inspect console logs and errors">🐞 Logs <span id="error-count-badge" class="badge-zero">0</span></button>
+                    <button id="btn-new-tab" class="preview-action-btn" type="button" title="Open preview in new tab">↗ New Window</button>
+                </div>
+            </div>
+
+            <!-- Preview frame viewport wrapper -->
+            <div class="preview-viewport-container" id="preview-viewport">
+                <!-- Connected moving constellation canvas -->
+                <canvas id="preview-stars-canvas" class="preview-stars-canvas"></canvas>
+                <div id="preview-placeholder" class="preview-empty-state">
+                    <div class="empty-state-content">
+                        <div class="empty-icon">✦</div>
+                        <h3>No Preview Available</h3>
+                        <p>Ask in chat to generate apps, 3D simulations, or interactive games.</p>
+                    </div>
+                </div>
+                <iframe id="preview-frame" class="hidden-frame" sandbox="allow-scripts allow-pointer-lock allow-modals allow-popups allow-forms" allow="fullscreen; gamepad; autoplay; microphone; accelerometer; gyroscope" allowfullscreen tabindex="0"></iframe>
+            </div>
+
+            <!-- Console Drawer (hidden by default) -->
+            <div id="console-drawer" class="console-drawer closed">
+                <div class="console-header">
+                    <span>SANDBOX RUNTIME LOGS & CONSOLE</span>
+                    <button type="button" id="btn-close-console">✕</button>
+                </div>
+                <div class="console-body" id="console-logs">
+                    <div class="console-log-empty">No errors or logs recorded.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2nd Mode: Pure Q&A Chat (ChatGPT + Gemini + Claude AI Knowledge Mix - Response Only, No Preview Output) -->
+        <section class="qa-chat-panel hidden-panel" id="qa-chat-panel">
+            <div class="qa-header-bar">
+                <div class="qa-brand">
+                    <span class="qa-icon">🧠</span>
+                    <div class="qa-title-wrap">
+                        <h3>TRINITY AI OMNI-CHAT</h3>
+                        <p>ChatGPT-4o Reasoning • Gemini Deep Synthesis • Claude 3.5 Nuance &amp; Clarity</p>
+                    </div>
+                </div>
+                <div class="qa-engine-badges">
+                    <span class="engine-pill gpt-pill">🟢 ChatGPT Logic</span>
+                    <span class="engine-pill gemini-pill">🔵 Gemini Knowledge</span>
+                    <span class="engine-pill claude-pill">🟠 Claude Reasoning</span>
+                    <button type="button" id="btn-clear-qa-chat" class="outline-btn" style="padding:4px 10px;font-size:11px;">🗑 Clear Q&amp;A</button>
+                </div>
+            </div>
+
+            <div class="qa-chat-stream" id="qa-chat-window">
+                <!-- Populated dynamically with Q&A messages -->
+            </div>
+
+            <div class="qa-suggestions-strip" id="qa-suggestions-strip">
+                <button type="button" class="qa-chip" data-qa="Explain quantum computing in simple terms and how it compares to classical bits.">⚛ Explain Quantum Computing</button>
+                <button type="button" class="qa-chip" data-qa="Compare the strengths of ChatGPT, Google Gemini, and Anthropic Claude AI.">🤖 ChatGPT vs Gemini vs Claude</button>
+                <button type="button" class="qa-chip" data-qa="How do black holes form and what happens at the event horizon?">🌌 Black Holes &amp; Event Horizon</button>
+                <button type="button" class="qa-chip" data-qa="Give me a step-by-step mental model for solving complex problems faster.">🧠 Problem-Solving Framework</button>
+            </div>
+
+            <div class="qa-input-container">
+                <div class="qa-input-box">
+                    <textarea id="qa-chat-input" rows="1" placeholder="Ask any question... (Pure Q&amp;A response mode — combines ChatGPT, Gemini &amp; Claude AI intelligence)" autocomplete="off"></textarea>
+                    <button id="qa-send-btn" type="button" class="qa-send-btn">
+                        <span class="qa-btn-text">ASK AI</span>
+                        <span>➤</span>
+                    </button>
+                </div>
+                <div class="qa-footer-info">
+                    <span>🔒 Pure Question &amp; Answer Mode — Direct response output only (No sandbox or app generation)</span>
+                    <span>Enter ↵ to ask • Shift+Enter for new line</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Code inspection modal restricted ONLY to user-requested generated code -->
+    <div id="code-modal-bg" class="gl-modal-bg">
+        <div class="gl-modal code-viewer-modal">
+            <div class="modal-top">
+                <h3>GENERATED CODE (USER REQUESTED ONLY)</h3>
+                <button type="button" class="modal-close-x" id="btn-close-code-modal">✕</button>
+            </div>
+            <div class="code-modal-tabs" id="code-modal-tabs">
+                <button type="button" class="file-tab active" data-file="generated">⚡ generated-code.html</button>
+            </div>
+            <div class="code-modal-actions">
+                <button type="button" id="btn-copy-code" class="chip-btn">📋 Copy Generated Code</button>
+                <button type="button" id="btn-download-code-modal" class="chip-btn primary">⬇ Download Generated Code</button>
+            </div>
+            <pre class="code-view-pre"><code id="code-view-content"></code></pre>
+        </div>
+    </div>
+
+    <div id="bug-log" style="display: none;"></div>
+
+    <script src="app.js?v=23"></script>
+</body>
+</html>

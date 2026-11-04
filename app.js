@@ -1,21 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ================= CONFIG =================
     const DEFAULT_API_KEY = "AQ.Ab8RN6LCUvafaNit6oD8cOxGeeZhticl53Gq5FWGXlEK9l3CvQ";
-    try { localStorage.removeItem('gl_api_key'); } catch (e) {}
+    try { 
+        localStorage.clear(); 
+    } catch (e) {}
     const MODELS = [
+        { id: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash-Lite (fastest & reliable)' },
         { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash (fast + smart)' },
-        { id: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash-Lite (fastest)' },
         { id: 'gemini-flash-latest', label: 'Gemini Flash (latest alias)' },
         { id: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro Preview (best quality)' },
     ];
     const RETIRED = /^gemini-(1\.|2\.)/; // old names now return 404
-    const FALLBACK_ORDER = ['gemini-3.8-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.1-pro-preview'];
+    const FALLBACK_ORDER = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.1-pro-preview'];
     const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
     // ==========================================
 
     const settings = {
         apiKey: DEFAULT_API_KEY,
-        model: 'gemini-3.8-flash',
+        model: 'gemini-3.5-flash-lite',
         temperature: 0.7,
     };
 

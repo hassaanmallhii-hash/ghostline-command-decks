@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ================= CONFIG =================
-    const DEFAULT_API_KEY = "AQ.Ab8RN6Jw-OsX39yPyWjIfbVw4V0X2bIIamy02L6znEdgdz-7ZA";
+    const DEFAULT_API_KEY = "AQ.Ab8RN6LCUvafaNit6oD8cOxGeeZhticl53Gq5FWGXlEK9l3CvQ";
+    try { localStorage.removeItem('gl_api_key'); } catch (e) {}
     const MODELS = [
         { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash (fast + smart)' },
         { id: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash-Lite (fastest)' },
